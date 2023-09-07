@@ -24,7 +24,7 @@ app.use('/', express.static('public'));
 // Configurar o Multer para lidar com uploads de arquivos diretamente em "public"
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __dirname + '\\public');
+    cb(null, __dirname + '/public');
   },
   filename: (req, file, cb) => {
     const timestamp = Date.now();
