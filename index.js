@@ -22,8 +22,8 @@ app.use(cors());
 app.use('/', express.static('public'));
 
 // Configurar o Multer para lidar com uploads de arquivos diretamente em "public"
-console.log(await fs.readdir(__dirname))
-console.log(await fs.readdir(__dirname + "\\public"))
+console.log(fs.readdirSync(__dirname))
+console.log(fs.readdirSync(__dirname + "\\public"))
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
     await cb(null, __dirname + '/public');
