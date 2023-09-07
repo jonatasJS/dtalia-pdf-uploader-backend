@@ -36,6 +36,8 @@ const upload = multer({ storage });
 
 // Rota para fazer upload de arquivos
 app.post('/upload', upload.single('nota'), async (req, res) => {
+  console.log(await fs.readdir(__dirname))
+  console.log(await fs.readdir(__dirname+"\\public"))
   try {
     // Salvar os dados do arquivo no MongoDB
     const NotaModel = require('./models/nota');
