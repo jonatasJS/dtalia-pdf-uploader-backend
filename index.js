@@ -24,7 +24,7 @@ app.use('/', express.static('public'));
 // Configurar o Multer para lidar com uploads de arquivos diretamente em "public"
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __dirname + '/public');
+    cb(null, '/public');
   },
   filename: (req, file, cb) => {
     const timestamp = Date.now();
@@ -45,7 +45,7 @@ app.post('/upload', upload.single('nota'), async (req, res) => {
       url: `/${filename}`, // Use req.file.filename para definir a URL do arquivo
     });
 
-    res.status(200).json({ message: 'Upload realizado com sucesso!' });
+    res.status(200).json({ message: 'Upload realizado com sucesso!', nota });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erro ao fazer o upload do arquivo.' });
