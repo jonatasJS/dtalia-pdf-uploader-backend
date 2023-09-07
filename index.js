@@ -81,6 +81,8 @@ app.delete('/delete/:id', async (req, res) => {
     // Exclua o arquivo físico na pasta "public" usando fs
     fs.unlinkSync(`public${nota.url}`);
 
+    console.log("sucsse")
+
     res.status(200).json({ message: 'Arquivo excluído com sucesso!' });
   } catch (error) {
     console.error(error);
