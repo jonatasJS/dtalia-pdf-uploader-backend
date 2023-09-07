@@ -23,12 +23,12 @@ app.use('/', express.static('public'));
 
 // Configurar o Multer para lidar com uploads de arquivos diretamente em "public"
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, '/public');
+  destination: async (req, file, cb) => {
+    await cb(null, '/public');
   },
-  filename: (req, file, cb) => {
+  filename: async (req, file, cb) => {
     const timestamp = Date.now();
-    cb(null, `${timestamp}-${file.originalname.replaceAll(" ", "_")}`);
+    await cb(null, `${timestamp}-${file.originalname.replaceAll(" ", "_")}`);
   },
 });
 
@@ -42,7 +42,7 @@ app.post('/upload', upload.single('nota'), async (req, res) => {
     const { originalname, filename } = req.file; // Use req.file.filename para obter o nome do arquivo salvo pelo Multer
     const nota = await NotaModel.create({
       name: originalname,
-      url: `/${filename}`, // Use req.file.filename para definir a URL do arquivo
+      url: `${filename}`, // Remova a barra inicial da URL
     });
 
     res.status(200).json({ message: 'Upload realizado com sucesso!', nota });
@@ -51,6 +51,7 @@ app.post('/upload', upload.single('nota'), async (req, res) => {
     res.status(500).json({ error: 'Erro ao fazer o upload do arquivo.' });
   }
 });
+
 
 
 // Rota para listar os arquivos no MongoDB
