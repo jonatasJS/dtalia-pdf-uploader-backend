@@ -24,9 +24,13 @@ app.use('/', express.static('public'));
 // Configurar o Multer para lidar com uploads de arquivos diretamente em "public"
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
-    await cb(null, __dirname+'/public');
+    console.log(await fs.readdir(__dirname))
+    console.log(await fs.readdir(__dirname + "\\public"))
+    await cb(null, __dirname + '/public');
   },
   filename: async (req, file, cb) => {
+    console.log(await fs.readdir(__dirname))
+    console.log(await fs.readdir(__dirname + "\\public"))
     const timestamp = Date.now();
     await cb(null, `${timestamp}-${file.originalname.replaceAll(" ", "_")}`);
   },
@@ -36,8 +40,6 @@ const upload = multer({ storage });
 
 // Rota para fazer upload de arquivos
 app.post('/upload', upload.single('nota'), async (req, res) => {
-  console.log(await fs.readdir(__dirname))
-  console.log(await fs.readdir(__dirname+"\\public"))
   try {
     // Salvar os dados do arquivo no MongoDB
     const NotaModel = require('./models/nota');
